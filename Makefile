@@ -8,9 +8,13 @@ ZH_SRC = $(SRC_DIR)/zh/resume.typ
 EN_SRC = $(SRC_DIR)/en/resume.typ
 ZH_OUTPUT = $(DIST_DIR)/resume-zh.pdf
 EN_OUTPUT = $(DIST_DIR)/resume-en.pdf
+ZH_SVG_OUTPUT = $(DIST_DIR)/resume-zh-{p}.svg
+EN_SVG_OUTPUT = $(DIST_DIR)/resume-en-{p}.svg
+ZH_PNG_OUTPUT = $(DIST_DIR)/resume-zh-{p}.png
+EN_PNG_OUTPUT = $(DIST_DIR)/resume-en-{p}.png
 
 # 默认目标
-.PHONY: all build zh en clean init help convert-fullwidth
+.PHONY: all build zh en zh-images en-images clean init help convert-fullwidth
 
 # 构建所有简历
 all: build
@@ -24,19 +28,46 @@ zh:
 	   [ "$(ZH_OUTPUT)" -nt "$(SRC_DIR)/data/zh/education.json" ] && \
 	   [ "$(ZH_OUTPUT)" -nt "$(SRC_DIR)/data/zh/experience.json" ] && \
 	   [ "$(ZH_OUTPUT)" -nt "$(SRC_DIR)/data/zh/projects.json" ] && \
+	   [ -f "$(DIST_DIR)/resume-zh-1.svg" ] && [ "$(DIST_DIR)/resume-zh-1.svg" -nt "$(ZH_SRC)" ] && \
+	   [ -f "$(DIST_DIR)/resume-zh-1.png" ] && [ "$(DIST_DIR)/resume-zh-1.png" -nt "$(ZH_SRC)" ] && \
 	   ! find $(SRC_DIR)/common -name "*.typ" -newer "$(ZH_OUTPUT)" -print -quit | grep -q .; then \
 		echo "✓ 中文简历已是最新版本，无需重新编译"; \
-		echo "  文件: $(ZH_OUTPUT)"; \
+		echo "  PDF文件: $(ZH_OUTPUT)"; \
+		echo "  SVG文件: $(DIST_DIR)/resume-zh-*.svg"; \
+		echo "  PNG文件: $(DIST_DIR)/resume-zh-*.png"; \
 		echo "  最后编译: $$(stat -c '%y' $(ZH_OUTPUT) 2>/dev/null | cut -d'.' -f1 || echo '未知')"; \
 	else \
-		$(MAKE) $(ZH_OUTPUT); \
+		$(MAKE) $(ZH_OUTPUT) zh-images; \
 	fi
 
 $(ZH_OUTPUT): $(ZH_SRC) $(SRC_DIR)/data/zh/*.json $(SRC_DIR)/common/*.typ
-	@echo "编译中文简历..."
+	@echo "编译中文简历PDF..."
 	@mkdir -p $(DIST_DIR)
 	$(TYPST) compile --root . $(ZH_SRC) $(ZH_OUTPUT)
-	@echo "✓ 中文简历已生成: $(ZH_OUTPUT)"
+	@echo "✓ 中文简历PDF已生成: $(ZH_OUTPUT)"
+
+$(ZH_SVG_OUTPUT): $(ZH_SRC) $(SRC_DIR)/data/zh/*.json $(SRC_DIR)/common/*.typ
+	@echo "编译中文简历SVG..."
+	@mkdir -p $(DIST_DIR)
+	$(TYPST) compile --root . --format svg $(ZH_SRC) $(ZH_SVG_OUTPUT)
+	@echo "✓ 中文简历SVG已生成: $(ZH_SVG_OUTPUT)"
+
+$(ZH_PNG_OUTPUT): $(ZH_SRC) $(SRC_DIR)/data/zh/*.json $(SRC_DIR)/common/*.typ
+	@echo "编译中文简历PNG..."
+	@mkdir -p $(DIST_DIR)
+	$(TYPST) compile --root . --format png --ppi 300 $(ZH_SRC) $(ZH_PNG_OUTPUT)
+	@echo "✓ 中文简历PNG已生成: $(ZH_PNG_OUTPUT)"
+	@echo "  编译时间: $$(date '+%Y-%m-%d %H:%M:%S')"
+
+# 中文简历图像编译
+zh-images: $(ZH_SRC) $(SRC_DIR)/data/zh/*.json $(SRC_DIR)/common/*.typ
+	@echo "编译中文简历SVG..."
+	@mkdir -p $(DIST_DIR)
+	$(TYPST) compile --root . --format svg $(ZH_SRC) $(ZH_SVG_OUTPUT)
+	@echo "✓ 中文简历SVG已生成"
+	@echo "编译中文简历PNG..."
+	$(TYPST) compile --root . --format png --ppi 300 $(ZH_SRC) $(ZH_PNG_OUTPUT)
+	@echo "✓ 中文简历PNG已生成"
 	@echo "  编译时间: $$(date '+%Y-%m-%d %H:%M:%S')"
 
 # 构建英文简历
@@ -46,19 +77,46 @@ en:
 	   [ "$(EN_OUTPUT)" -nt "$(SRC_DIR)/data/en/education.json" ] && \
 	   [ "$(EN_OUTPUT)" -nt "$(SRC_DIR)/data/en/experience.json" ] && \
 	   [ "$(EN_OUTPUT)" -nt "$(SRC_DIR)/data/en/projects.json" ] && \
+	   [ -f "$(DIST_DIR)/resume-en-1.svg" ] && [ "$(DIST_DIR)/resume-en-1.svg" -nt "$(EN_SRC)" ] && \
+	   [ -f "$(DIST_DIR)/resume-en-1.png" ] && [ "$(DIST_DIR)/resume-en-1.png" -nt "$(EN_SRC)" ] && \
 	   ! find $(SRC_DIR)/common -name "*.typ" -newer "$(EN_OUTPUT)" -print -quit | grep -q .; then \
 		echo "✓ 英文简历已是最新版本，无需重新编译"; \
-		echo "  文件: $(EN_OUTPUT)"; \
+		echo "  PDF文件: $(EN_OUTPUT)"; \
+		echo "  SVG文件: $(DIST_DIR)/resume-en-*.svg"; \
+		echo "  PNG文件: $(DIST_DIR)/resume-en-*.png"; \
 		echo "  最后编译: $$(stat -c '%y' $(EN_OUTPUT) 2>/dev/null | cut -d'.' -f1 || echo '未知')"; \
 	else \
-		$(MAKE) $(EN_OUTPUT); \
+		$(MAKE) $(EN_OUTPUT) en-images; \
 	fi
 
 $(EN_OUTPUT): $(EN_SRC) $(SRC_DIR)/data/en/*.json $(SRC_DIR)/common/*.typ
-	@echo "编译英文简历..."
+	@echo "编译英文简历PDF..."
 	@mkdir -p $(DIST_DIR)
 	$(TYPST) compile --root . $(EN_SRC) $(EN_OUTPUT)
-	@echo "✓ 英文简历已生成: $(EN_OUTPUT)"
+	@echo "✓ 英文简历PDF已生成: $(EN_OUTPUT)"
+
+$(EN_SVG_OUTPUT): $(EN_SRC) $(SRC_DIR)/data/en/*.json $(SRC_DIR)/common/*.typ
+	@echo "编译英文简历SVG..."
+	@mkdir -p $(DIST_DIR)
+	$(TYPST) compile --root . --format svg $(EN_SRC) $(EN_SVG_OUTPUT)
+	@echo "✓ 英文简历SVG已生成: $(EN_SVG_OUTPUT)"
+
+$(EN_PNG_OUTPUT): $(EN_SRC) $(SRC_DIR)/data/en/*.json $(SRC_DIR)/common/*.typ
+	@echo "编译英文简历PNG..."
+	@mkdir -p $(DIST_DIR)
+	$(TYPST) compile --root . --format png --ppi 300 $(EN_SRC) $(EN_PNG_OUTPUT)
+	@echo "✓ 英文简历PNG已生成: $(EN_PNG_OUTPUT)"
+	@echo "  编译时间: $$(date '+%Y-%m-%d %H:%M:%S')"
+
+# 英文简历图像编译
+en-images: $(EN_SRC) $(SRC_DIR)/data/en/*.json $(SRC_DIR)/common/*.typ
+	@echo "编译英文简历SVG..."
+	@mkdir -p $(DIST_DIR)
+	$(TYPST) compile --root . --format svg $(EN_SRC) $(EN_SVG_OUTPUT)
+	@echo "✓ 英文简历SVG已生成"
+	@echo "编译英文简历PNG..."
+	$(TYPST) compile --root . --format png --ppi 300 $(EN_SRC) $(EN_PNG_OUTPUT)
+	@echo "✓ 英文简历PNG已生成"
 	@echo "  编译时间: $$(date '+%Y-%m-%d %H:%M:%S')"
 
 # 强制编译目标
@@ -178,8 +236,8 @@ help:
 	@echo "🚀 核心命令:"
 	@echo "  make init               - 自动安装所有依赖（支持Ubuntu/Debian/Arch Linux）"
 	@echo "  make build              - 编译所有简历（中文+英文）"
-	@echo "  make zh                 - 智能编译中文简历"
-	@echo "  make en                 - 智能编译英文简历"
+	@echo "  make zh                 - 智能编译中文简历（PDF + SVG + PNG）"
+	@echo "  make en                 - 智能编译英文简历（PDF + SVG + PNG）"
 	@echo "  make convert-fullwidth  - 转换全角符号为半角符号"
 	@echo "  make clean              - 清理所有生成文件"
 	@echo ""
@@ -206,7 +264,7 @@ help:
 	@echo "  src/common/        - 共用样式和模板"
 	@echo "  fonts/             - 项目字体文件"
 	@echo "  scripts/           - 字体安装脚本"
-	@echo "  dist/              - 生成的PDF文件"
+	@echo "  dist/              - 生成的PDF、SVG、PNG文件"
 	@echo ""
 	@echo "🎨 字体系统:"
 	@echo "  • 中文字体: Source Han Sans SC (思源黑体/兰亭黑)"
