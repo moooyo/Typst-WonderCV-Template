@@ -7,32 +7,35 @@ This file provides comprehensive guidance to Claude Code (claude.ai/code) when w
 This is a professional bilingual (Chinese/English) resume management system built with Typst, a modern typesetting engine. The system features a sophisticated modular template architecture with separated data management, where resume data is intelligently split into multiple JSON files for optimal organization, maintenance, and scalability.
 
 ### Key Features
-- **Intelligent Build System**: Timestamp-based incremental compilation with dependency tracking
+- **Multi-Format Output**: Generates PDF, SVG, and PNG formats for diverse distribution needs
+- **Intelligent Build System**: Timestamp-based incremental compilation with dependency tracking across all formats
 - **Modular Data Architecture**: Resume data separated into logical modules (basic, education, experience, projects)
 - **Cross-Platform Font Management**: Project-level font system ensuring consistent output across environments
 - **Automated Environment Setup**: One-command initialization supporting Ubuntu/Debian/Arch Linux
 - **Professional Typesetting**: Modern layout with Typst's advanced typography capabilities
+- **Documentation System**: Comprehensive README with visual preview and complete setup guide
 
 ## Essential Commands
 
 ### Core Build Commands
 - `make init` - **CRITICAL FIRST STEP**: Automated environment setup including Typst installation, font installation, and dependency management (supports Ubuntu/Debian/Arch Linux)
-- `make build` - Build both Chinese and English PDFs with intelligent dependency checking
-- `make zh` - Build Chinese resume only (with smart timestamp checking across all data files)
-- `make en` - Build English resume only (with smart timestamp checking across all data files)
+- `make build` - Build both Chinese and English resumes in all formats (PDF, SVG, PNG) with intelligent dependency checking
+- `make zh` - Build Chinese resume in all formats (with smart timestamp checking across all data files)
+- `make en` - Build English resume in all formats (with smart timestamp checking across all data files)
 - `make clean` - Remove all generated files from dist/ directory
 - `make help` - Comprehensive command reference with detailed explanations
 
 ### Development Workflow
 - **Initial Setup**: Always run `make init` first on new environments
 - **Testing Changes**: Use `make zh` or `make en` for rapid iteration during development
-- **Production Build**: Use `make build` for final output generation
-- **Verification**: Check generated PDFs in `dist/` directory (resume-zh.pdf, resume-en.pdf)
+- **Production Build**: Use `make build` for final output generation in all formats
+- **Verification**: Check generated files in `dist/` directory (PDF: resume-zh.pdf, resume-en.pdf; SVG: resume-*.svg; PNG: resume-*.png)
 
 ### Smart Build Features
 - Dependency tracking includes: .typ files, all JSON data files, common template files
-- Skips compilation when output is newer than all dependencies
+- Skips compilation when output is newer than all dependencies for all formats (PDF, SVG, PNG)
 - Provides clear feedback about build necessity and file timestamps
+- Multi-format output generation with optimized workflows for different use cases
 
 ## Architecture
 
@@ -52,7 +55,7 @@ This is a professional bilingual (Chinese/English) resume management system buil
   - **Entry Points**: Language-specific compilation entry points in `src/{zh,en}/resume.typ`
 
 - **Professional Font Management**: Enterprise-grade font system for consistency
-  - `fonts/` - Curated font collection (Source Code Pro, Source Han Sans SC)
+  - `fonts/` - Curated font collection (Inter fonts, Source Han Sans SC)
   - `scripts/install_fonts.sh` - Automated font installation with user directory management
   - Project-level font priority ensures consistent rendering across different environments
 
@@ -202,8 +205,8 @@ Always use the `get-style-params()` function to access configuration values rath
 ### Professional Font Selection
 The project employs carefully selected fonts for optimal readability and professional appearance:
 - **Chinese Typography**: Source Han Sans SC (思源黑体) - Comprehensive CJK character support
-- **Latin Typography**: Source Code Pro - Clean, readable monospace-inspired design
-- **Font Weights**: Regular, Medium, Bold variants for hierarchical typography
+- **Latin Typography**: Inter font family - Modern, highly readable geometric sans-serif
+- **Font Weights**: Regular, Medium, Bold, and Italic variants for hierarchical typography
 
 ### Font Management Architecture
 - **Project-Level Storage**: All fonts stored in `fonts/` directory for version control
@@ -213,17 +216,29 @@ The project employs carefully selected fonts for optimal readability and profess
 
 ## Output and Distribution
 
-### Generated Files
-Professional-grade PDF output with consistent formatting:
-- `dist/resume-zh.pdf` - Chinese version with proper CJK typography
-- `dist/resume-en.pdf` - English version with optimized Latin typography
-- **Quality**: Production-ready with proper font embedding and vector graphics
+### Multi-Format Output System
+Professional-grade output in multiple formats for diverse distribution needs:
+- **PDF**: Production-ready with proper font embedding and vector graphics
+  - `dist/resume-zh.pdf` - Chinese version with proper CJK typography
+  - `dist/resume-en.pdf` - English version with optimized Latin typography
+- **SVG**: Vector format for web display and digital platforms
+  - `dist/resume-zh-*.svg` - Chinese version in scalable vector format
+  - `dist/resume-en-*.svg` - English version in scalable vector format
+- **PNG**: High-resolution bitmap for social media and quick previews
+  - `dist/resume-zh-*.png` - Chinese version at 300 DPI
+  - `dist/resume-en-*.png` - English version at 300 DPI
 
 ### File Characteristics
-- **Format**: PDF/A-1b compliance for archival quality
-- **Fonts**: Embedded for universal compatibility
-- **Size**: Optimized for both digital viewing and printing
-- **Accessibility**: High contrast ratios and readable font sizes
+- **PDF Format**: PDF/A-1b compliance for archival quality
+- **SVG Format**: Web-optimized with embedded fonts and proper scaling
+- **PNG Format**: High-resolution (300 DPI) for print-quality bitmap output
+- **Universal Compatibility**: Embedded fonts ensure consistent rendering across all platforms
+- **Accessibility**: High contrast ratios and readable font sizes across all formats
+
+### Documentation and Preview System
+- **Visual Documentation**: README.md includes SVG preview of the Chinese resume
+- **Preview File**: `docs/resume-preview.svg` showcases the template design
+- **Complete Documentation**: Comprehensive setup guide and feature overview
 
 ## Migration and Maintenance Guide
 
@@ -259,10 +274,11 @@ When migrating from legacy single-file structures:
 5. ✅ Validate output: Review generated PDFs in `dist/`
 
 ### Development Best Practices
-- **Incremental Development**: Use `make zh` or `make en` for rapid iteration
-- **Version Control**: Commit both source files and generated PDFs for history
-- **Testing**: Verify changes in both language versions
-- **Documentation**: Update comments in templates for complex modifications
+- **Incremental Development**: Use `make zh` or `make en` for rapid iteration across all formats
+- **Version Control**: Commit source files and optionally generated files for history
+- **Multi-Format Testing**: Verify changes in PDF, SVG, and PNG outputs
+- **Format-Specific Considerations**: Test SVG rendering in browsers, PNG quality at different scales
+- **Documentation**: Update comments in templates for complex modifications and maintain README.md
 
 ## Response Guidelines
 Always respond in Chinese when providing assistance or explanations.
