@@ -28,8 +28,8 @@
   fonts: (
     // 中文字体 - 使用兰亭黑（思源黑体 SC）
     chinese: ("Source Han Sans SC",),
-    // 英文字体 - 使用Source Code Pro
-    english: ("Source Code Pro",),
+    // 英文字体 - 使用Inter字体
+    english: ("Inter",),
   ),
   
   // ==========================================================================

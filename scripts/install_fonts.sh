@@ -108,18 +108,18 @@ verify_fonts() {
         print_warning "  ! 思源黑体字体: 可能未正确安装"
     fi
     
-    # 检查Source Code Pro字体
-    if fc-list | grep -i "source.*code.*pro" >/dev/null 2>&1 || ls "$USER_FONTS_DIR"/SourceCodePro* >/dev/null 2>&1; then
-        print_success "  ✓ Source Code Pro字体: 可用"
+    # 检查Inter字体
+    if fc-list | grep -i "inter" >/dev/null 2>&1 || ls "$USER_FONTS_DIR"/Inter* >/dev/null 2>&1; then
+        print_success "  ✓ Inter字体: 可用"
     else
-        print_warning "  ! Source Code Pro字体: 可能未正确安装"
+        print_warning "  ! Inter字体: 可能未正确安装"
     fi
     
     # 验证Typst是否能识别字体
     if command -v typst >/dev/null 2>&1; then
         print_info "验证Typst字体识别..."
-        if typst fonts | grep -i "source.*code" >/dev/null 2>&1; then
-            print_success "  ✓ Typst能识别Source Code Pro字体"
+        if typst fonts | grep -i "inter" >/dev/null 2>&1; then
+            print_success "  ✓ Typst能识别Inter字体"
         fi
         if typst fonts | grep -i "source.*han.*sans" >/dev/null 2>&1; then
             print_success "  ✓ Typst能识别思源黑体字体"
@@ -144,7 +144,7 @@ show_install_info() {
     echo
     print_info "现在可以在简历编译中使用以下字体:"
     print_info "  • 中文字体: Source Han Sans SC (思源黑体)"
-    print_info "  • 英文字体: Source Code Pro"
+    print_info "  • 英文字体: Inter"
     echo
     print_info "运行 'make zh' 或 'make en' 来编译简历"
 }
