@@ -1,0 +1,46 @@
+[
+  {
+    "company": "Meituan",
+    "position": "Senior Technical Expert & Intelligent Logistics Algorithm Lead",
+    "duration": "2022.04 - Present",
+    "location": "Beijing, China",
+    "description": [
+      "Lead the architecture design of Meituan's intelligent delivery scheduling system, processing 30M+ daily orders with 35% efficiency improvement",
+      "Designed and implemented deep learning-based delivery route optimization algorithms, reducing average delivery time by 8 minutes",
+      "Responsible for Meituan rider intelligent order dispatch system, optimizing order allocation through ML models, increasing rider income by 25%",
+      "Designed intelligent delivery exception handling system with 95% automation rate, reducing customer service tickets by 60%",
+      "Established comprehensive A/B testing framework and data monitoring system, supporting rapid business iteration and decision-making",
+      "Managed a 15-person technical team, responsible for onboarding training and technical solution reviews, achieving excellent team performance for 3 consecutive years"
+    ]
+  },
+  {
+    "company": "Tencent",
+    "position": "Senior Engineer & Virtual Digital Human Technology Lead",
+    "duration": "2012.03 - 2022.03",
+    "location": "Shenzhen, China",
+    "description": [
+      "Fully participated in the technical architecture design and core algorithm development of Tencent's virtual streamer 'Xingtong' project",
+      "Responsible for Xingtong's real-time motion capture system, achieving millisecond-level facial expression and body movement synchronization",
+      "Developed deep learning-based speech synthesis and lip-sync technology, giving Xingtong natural and fluent expression capabilities",
+      "Designed and implemented Xingtong's AI dialogue system supporting multi-turn conversations and emotion understanding, leading industry interaction experience",
+      "Led the backend architecture of Xingtong's streaming platform, supporting millions of concurrent viewers with 99.99% system stability",
+      "Spearheaded the productization of Tencent Cloud's virtual digital human solutions, providing customized services for multiple industry clients",
+      "Grew technical team from 5 to 50 members, establishing comprehensive virtual digital human technology systems and standards"
+    ]
+  },
+  {
+    "company": "Alibaba",
+    "position": "Co-founder & Chief Technology Officer",
+    "duration": "2002.01 - 2012.02",
+    "location": "Hangzhou, China",
+    "description": [
+      "Co-founded Alibaba Group with senior brother Jack Ma, incorporating Jianghu wisdom and martial arts spirit into corporate culture",
+      "Led Taobao website architecture design using 'Nine Yang Divine Skill' distributed architecture, supporting billion-level user access",
+      "Founded Alipay and served as Chief Architect, integrating the martial arts concept of 'word of honor' into payment security systems",
+      "Designed the famous 'Six Meridian Divine Sword' microservices architecture, laying the foundation for Alibaba's middle platform technology system",
+      "Pioneered the application of 'Eighteen Dragon Subduing Palms' algorithms to search engine optimization, improving product search accuracy by 300%",
+      "Established Alibaba Martial Arts Technology Academy, cultivating thousands of technical talents with chivalrous spirit",
+      "Honored as Alibaba Lifetime Honorary Technical Committee Chairman and Number One Programmer in Jianghu"
+    ]
+  }
+]

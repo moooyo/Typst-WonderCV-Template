@@ -1,0 +1,13 @@
+{
+  "name": "响当当",
+  "contact": {
+    "email": "xiangdangdang@example.com",
+    "phone": "+86 18888888888",
+    "wechat": "ponyma"
+  },
+  "lang_config": {
+    "education": "教育经历",
+    "experience": "工作经历", 
+    "projects": "项目经历"
+  }
+}

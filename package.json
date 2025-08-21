@@ -1,0 +1,25 @@
+{
+  "name": "typst-resume-wondercv",
+  "version": "1.0.0",
+  "description": "WonderCV - 基于 Typst 的现代化双语简历模板系统",
+  "main": "index.js",
+  "scripts": {
+    "build": "make build",
+    "build:zh": "make zh",
+    "build:en": "make en",
+    "clean": "make clean",
+    "watch": "make watch"
+  },
+  "keywords": [
+    "resume",
+    "typst",
+    "chinese",
+    "english",
+    "cv"
+  ],
+  "author": "moooyo",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Xiang Dangdang",
+  "contact": {
+    "email": "xiangdangdang@example.com",
+    "phone": "+86 18888888888",
+    "location": "Jianghu, China",
+    "github": "github.com/xiangdangdang",
+    "linkedin": "linkedin.com/in/xiangdangdang"
+  },
+  "lang_config": {
+    "education": "Education",
+    "experience": "Experience",
+    "projects": "Projects"
+  }
+}
