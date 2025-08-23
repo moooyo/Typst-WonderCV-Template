@@ -6,6 +6,29 @@
 
 #import "settings.typ": settings
 
+// 格式化时间范围的辅助函数
+#let format-duration(duration) = {
+  if type(duration) == str {
+    // 兼容旧的字符串格式
+    return duration
+  } else if type(duration) == dictionary {
+    let start = duration.at("start", default: none)
+    let end = duration.at("end", default: none)
+    
+    if start != none and end != none {
+      return start + " – " + end
+    } else if start != none {
+      return start
+    } else if end != none {
+      return end
+    } else {
+      return ""
+    }
+  } else {
+    return ""
+  }
+}
+
 // 主模板函数 - 使用现代化 Typst 语法
 #let resume-template(
   name: "",
@@ -23,13 +46,21 @@
       y: settings.page.margin-y
     )
   )
-  set par(justify: settings.paragraph.justify)
+  set par(
+    justify: settings.paragraph.justify,
+    leading: settings.paragraph.leading,
+    spacing: settings.paragraph.spacing
+  )
   
-  // 根据语言选择字体配置 - 简化条件逻辑
-  let font-family = if is-chinese { settings.fonts.chinese } else { settings.fonts.english }
+  // 根据语言和字体主题选择字体配置 - 支持屏幕版和打印版切换
+  let current-theme = settings.fonts.theme
+  let theme-fonts = if current-theme == "print" { settings.fonts.print } else { settings.fonts.screen }
+  let font-family = if is-chinese { theme-fonts.chinese } else { theme-fonts.english }
   set text(
     font: font-family,
-    size: settings.font-sizes.base
+    size: settings.font-sizes.base,
+    lang: if is-chinese { "zh" } else { "en" },
+    hyphenate: false // 禁用自动连字，提高排版质量
   )
   
   // 现代化分割线函数 - 使用更清晰的语法
@@ -104,18 +135,18 @@
           fill: settings.colors.text-medium, 
           weight: "bold", 
           size: settings.font-sizes.sub-heading
-        )[#exp.at("company", default: "")],
+        )[#exp.company],
         text(
           fill: settings.colors.gray, 
           weight: "regular", 
           size: settings.font-sizes.sub-heading
-        )[#exp.at("duration", default: "")],
+        )[#format-duration(exp.duration)],
       )
       v(settings.spacing.grid-row-spacing)  // 使用统一的grid行间距配置
       
       // 第二行：职位（左对齐）和地点（右对齐）
-      let pos = exp.at("position", default: "")
-      let loc = exp.at("location", default: "")
+      let pos = exp.position
+      let loc = exp.location
       
       if pos != "" or loc != "" {
         grid(
@@ -134,7 +165,7 @@
         v(settings.spacing.grid-row-spacing)  // 使用统一的grid行间距配置
       }
       
-      let desc = exp.at("description", default: ())
+      let desc = exp.description
       for d in desc {
         text(
           fill: settings.colors.text-light,
@@ -159,46 +190,34 @@
           fill: settings.colors.text-dark, 
           weight: "bold", 
           size: settings.font-sizes.sub-heading
-        )[#proj.at("name", default: "")],
+        )[#proj.name],
         text(
           fill: settings.colors.gray, 
           weight: "regular", 
           size: settings.font-sizes.sub-heading
-        )[#proj.at("duration", default: "")],
+        )[#format-duration(proj.at("duration", default: ""))],
       )
       v(settings.spacing.grid-row-spacing)  // 使用统一的grid行间距配置
       
-      let desc = proj.at("description", default: ())
+      let desc = proj.description
       if desc != () {
-        if type(desc) == array {
-          // 处理数组格式的描述
-          for paragraph in desc {
-            let content = if is-chinese {
-              // 中文段落添加两格缩进
-              "　　" + paragraph
-            } else {
-              // 英文段落不添加缩进
-              paragraph
-            }
+        for paragraph in desc {
+          if is-chinese {
+            // 中文段落使用block添加首行缩进
+            block(
+              text(
+                fill: settings.colors.text-light,
+                size: settings.font-sizes.description
+              )[#h(2em)#paragraph]
+            )
+          } else {
+            // 英文段落不添加缩进
             text(
               fill: settings.colors.text-light,
               size: settings.font-sizes.description
-            )[#content]
+            )[#paragraph]
             linebreak()
           }
-        } else {
-          // 兼容旧的字符串格式
-          let content = if is-chinese {
-            "　　" + desc
-          } else {
-            desc
-          }
-          text(
-            fill: settings.colors.text-light,
-            style: "italic", 
-            size: settings.font-sizes.description
-          )[#content]
-          linebreak()
         }
       }
       
@@ -227,17 +246,17 @@
           fill: settings.colors.text-medium, 
           weight: "bold", 
           size: settings.font-sizes.sub-heading
-        )[#edu.at("institution", default: "")],
+        )[#edu.institution],
         text(
           fill: settings.colors.gray, 
           weight: "regular", 
           size: settings.font-sizes.sub-heading
-        )[#edu.at("duration", default: "")],
+        )[#format-duration(edu.duration)],
       )
       
       // 第二行：学位（左对齐）和地点（右对齐）
-      let degree = edu.at("degree", default: "")
-      let loc = edu.at("location", default: "")
+      let degree = edu.degree
+      let loc = edu.location
       
       if degree != "" or loc != "" {
         grid(
@@ -255,7 +274,7 @@
         )
       }
       
-      let details = edu.at("details", default: ())
+      let details = edu.details
       for detail in details {
         text(
           fill: settings.colors.text-light,

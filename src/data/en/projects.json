@@ -6,7 +6,10 @@
       "Built real-time order scheduling engine supporting second-level response and intelligent dispatch, improving rider order acceptance rate by 40%. Optimized order allocation strategies through machine learning models, achieving optimal allocation of delivery resources. Developed intelligent delivery exception identification and handling system with 95% automation rate, significantly reducing manual costs.",
       "Established comprehensive A/B testing and data monitoring system supporting daily business optimization and decision-making. Continuously improved algorithm performance through data-driven approaches, providing strong technical support for Meituan's delivery business rapid development."
     ],
-    "duration": "2022.04 - Present",
+    "duration": {
+      "start": "2022.04",
+      "end": "Present"
+    },
     "tech-stack": "Python, TensorFlow, Kubernetes, Redis, MySQL"
   },
   {
@@ -16,7 +19,10 @@
       "Designed and implemented deep learning-based speech synthesis technology giving Xingtong natural and fluent expression capabilities. Built AI dialogue system supporting multi-turn conversations and emotion understanding, achieving industry-leading interaction experience. Through advanced natural language processing technology, enabled Xingtong to understand audience emotions and provide appropriate responses.",
       "Established streaming technology architecture supporting millions of concurrent users with 99.99% system stability. From underlying architecture to upper-level applications, comprehensively ensured technical stability of virtual streamer broadcasting, laying a solid technical foundation for Tencent's virtual digital human business development."
     ],
-    "duration": "2012.03 - 2022.03",
+    "duration": {
+      "start": "2012.03",
+      "end": "2022.03"
+    },
     "tech-stack": "C++, Python, OpenCV, TensorFlow, WebRTC"
   },
   {
@@ -26,7 +32,10 @@
       "Developed payment security system integrating martial arts integrity concepts, establishing comprehensive credit assessment mechanisms. Transformed the chivalrous spirit of 'word of honor' into technical implementation, building a secure and reliable payment system. Innovatively applied 'Eighteen Dragon Subduing Palms' algorithms to product search engines, improving search accuracy by 300%.",
       "Established complete e-commerce middle platform technology system, laying technical foundation for subsequent Alibaba ecosystem development. This system not only supported Taobao's rapid development but also pointed the direction for the entire Alibaba Group's technical architecture development, becoming an important milestone in China's e-commerce technology development."
     ],
-    "duration": "2002.01 - 2012.02",
+    "duration": {
+      "start": "2002.01",
+      "end": "2012.02"
+    },
     "tech-stack": "Java, Oracle, Distributed Architecture, Six Meridian Divine Sword Framework"
   },
   {
@@ -36,7 +45,10 @@
       "Developed real-time training progress tracking system accurately recording students' internal energy cultivation improvements. Implemented online guidance function between masters and disciples, supporting remote transmission of martial arts techniques. Through technological means, broke geographical limitations, enabling more efficient martial arts inheritance.",
       "System helped Martial Arts Department students improve overall strength by 200%, achieving 100% graduate employment rate. This project successfully combined traditional martial arts culture with modern information technology, exploring a new path for the modernization development of martial arts education."
     ],
-    "duration": "2018.09 - 2020.06",
+    "duration": {
+      "start": "2018.09",
+      "end": "2020.06"
+    },
     "tech-stack": "Python, Django, MySQL, Martial Arts Algorithm Framework"
   }
 ]

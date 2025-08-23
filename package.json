@@ -7,8 +7,7 @@
     "build": "make build",
     "build:zh": "make zh",
     "build:en": "make en",
-    "clean": "make clean",
-    "watch": "make watch"
+    "clean": "make clean"
   },
   "keywords": [
     "resume",

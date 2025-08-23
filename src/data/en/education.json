@@ -2,7 +2,10 @@
   {
     "institution": "Xiangdangdang University",
     "degree": "Bachelor of Martial Arts",
-    "duration": "2016.09 - 2020.06",
+    "duration": {
+      "start": "2016.09",
+      "end": "2020.06"
+    },
     "location": "Jianghu, China",
     "details": [
       "Relevant Coursework: Nine Yang Divine Skill, Six Meridian Divine Sword, Eighteen Dragon Subduing Palms, Graceful Steps upon the Waves",

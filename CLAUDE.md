@@ -1,284 +1,83 @@
 # CLAUDE.md
 
-This file provides comprehensive guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-This is a professional bilingual (Chinese/English) resume management system built with Typst, a modern typesetting engine. The system features a sophisticated modular template architecture with separated data management, where resume data is intelligently split into multiple JSON files for optimal organization, maintenance, and scalability.
+WonderCV is a modern bilingual (Chinese/English) resume management system built on Typst typesetting engine. It features modular architecture with JSON-based data management, cross-platform font management, and intelligent build system.
 
-### Key Features
-- **Multi-Format Output**: Generates PDF, SVG, and PNG formats for diverse distribution needs
-- **Intelligent Build System**: Timestamp-based incremental compilation with dependency tracking across all formats
-- **Modular Data Architecture**: Resume data separated into logical modules (basic, education, experience, projects)
-- **Cross-Platform Font Management**: Project-level font system ensuring consistent output across environments
-- **Automated Environment Setup**: One-command initialization supporting Ubuntu/Debian/Arch Linux
-- **Professional Typesetting**: Modern layout with Typst's advanced typography capabilities
-- **Documentation System**: Comprehensive README with visual preview and complete setup guide
-
-## Essential Commands
+## Common Development Commands
 
 ### Core Build Commands
-- `make init` - **CRITICAL FIRST STEP**: Automated environment setup including Typst installation, font installation, and dependency management (supports Ubuntu/Debian/Arch Linux)
-- `make build` - Build both Chinese and English resumes in all formats (PDF, SVG, PNG) with intelligent dependency checking
-- `make zh` - Build Chinese resume in all formats (with smart timestamp checking across all data files)
-- `make en` - Build English resume in all formats (with smart timestamp checking across all data files)
-- `make clean` - Remove all generated files from dist/ directory
-- `make help` - Comprehensive command reference with detailed explanations
+- `make init` - **Required first step**: Auto-installs all dependencies (Typst, Node.js, fonts)
+- `make build` - Build both Chinese and English versions (PDF + SVG + PNG)
+- `make zh` - Build Chinese resume with intelligent incremental compilation
+- `make en` - Build English resume with intelligent incremental compilation
+- `make clean` - Clean all generated files in dist/ directory
+- `make watch` - File monitoring mode for development
+- `make help` - Show all available commands
 
-### Development Workflow
-- **Initial Setup**: Always run `make init` first on new environments
-- **Testing Changes**: Use `make zh` or `make en` for rapid iteration during development
-- **Production Build**: Use `make build` for final output generation in all formats
-- **Verification**: Check generated files in `dist/` directory (PDF: resume-zh.pdf, resume-en.pdf; SVG: resume-*.svg; PNG: resume-*.png)
+### NPM Scripts
+- `npm run build` - Equivalent to `make build`
+- `npm run build:zh` - Build Chinese version only
+- `npm run build:en` - Build English version only
+- `npm run clean` - Clean generated files
 
-### Smart Build Features
-- Dependency tracking includes: .typ files, all JSON data files, common template files
-- Skips compilation when output is newer than all dependencies for all formats (PDF, SVG, PNG)
-- Provides clear feedback about build necessity and file timestamps
-- Multi-format output generation with optimized workflows for different use cases
+### Development Tools
+- `make convert-fullwidth` - Convert fullwidth punctuation to halfwidth in JSON files
 
-## Architecture
+## Architecture and Code Structure
 
-### Advanced Template System
-- **Modular Design**: Highly maintainable template structure in `src/common/`
-  - `template.typ` - Core resume template function with advanced layout logic
-  - `style.typ` - Reusable component styling functions (sections, items, headers)
-  - `settings.typ` - Centralized configuration system with `get-style-params()` function
-  
-- **Intelligent Data Layer**: Logically separated JSON files optimized for maintenance
-  - `src/data/zh/` - Chinese resume data files with complete localization
-    - `basic.json` - Personal information, contact details, and language configuration
-    - `education.json` - Academic background with structured institution data
-    - `experience.json` - Professional work history with detailed descriptions
-    - `projects.json` - Technical project portfolio with tech stack information
-  - `src/data/en/` - English resume data files (identical structure for consistency)
-  - **Entry Points**: Language-specific compilation entry points in `src/{zh,en}/resume.typ`
+### Template System Architecture
+The project uses a three-layer template architecture:
 
-- **Professional Font Management**: Enterprise-grade font system for consistency
-  - `fonts/` - Curated font collection (Inter fonts, Source Han Sans SC)
-  - `scripts/install_fonts.sh` - Automated font installation with user directory management
-  - Project-level font priority ensures consistent rendering across different environments
+1. **Data Layer** (`src/data/`): JSON files containing resume content
+   - `basic.json` - Personal information and language configuration
+   - `education.json` - Education history
+   - `experience.json` - Work experience
+   - `projects.json` - Project portfolio
 
-### Advanced Design Patterns
+2. **Template Layer** (`src/common/`):
+   - `template.typ` - Main template with modern Typst syntax and grid layouts
+   - `style.typ` - Style definitions and theme configuration
+   - `settings.typ` - Centralized configuration management
 
-1. **Configuration-Driven Styling**: All visual parameters centralized in `settings.typ`
-   - Accessed via `get-style-params()` function for consistent theming
-   - Supports easy customization without template modification
-   
-2. **Intelligent Language Detection**: Template behavior adapts based on `is-chinese` boolean
-   - Automatic font selection, spacing adjustments, and layout optimization
-   - Language-specific formatting rules applied consistently
-   
-3. **Incremental Build Optimization**: Advanced dependency tracking system
-   - Monitors changes across all template files, data files, and common components
-   - Provides clear feedback about build necessity and file modification times
-   
-4. **Modular Data Architecture**: Resume content logically separated for scalability
-   - `basic.json` - Personal information, contact details, and localization settings
-   - `education.json` - Academic background with institution details and achievements
-   - `experience.json` - Professional work history with comprehensive descriptions
-   - `projects.json` - Technical project portfolio with technology stack details
-   
-5. **Font System Priority**: Project fonts override system fonts ensuring cross-environment consistency
-   - Automated installation to user font directory
-   - Fallback font handling for missing system fonts
+3. **Language Layer** (`src/zh/`, `src/en/`):
+   - `resume.typ` - Language-specific entry points that import data and apply templates
 
-### Core Template Functions
-- `resume-template()` - Main template orchestrator accepting modular data parameters
-- `section-header()` - Professionally styled section headers with visual dividers
-- `experience-item()` / `project-item()` / `education-item()` - Specialized content blocks with consistent formatting
-- `page-setup()` - Language-aware page configuration and font initialization
+### Key Design Patterns
 
-## Advanced File Editing Guidelines
+**Modular Data Management**: Resume sections are separated into individual JSON files for maintainability. Each section can be independently edited without affecting others.
 
-### Data Management Best Practices
-Edit the appropriate JSON files in `src/data/zh/` or `src/data/en/` following the established schema:
-- **basic.json**: Update personal information, contact details, and language-specific configurations
-- **education.json**: Add/modify educational entries with comprehensive details
-- **experience.json**: Manage work experience with detailed accomplishment descriptions  
-- **projects.json**: Maintain project portfolio with technology stacks and outcomes
+**Configuration-Driven Styling**: All styling parameters (colors, fonts, spacing, grid layouts) are centralized in `settings.typ`, allowing easy theme customization.
 
-### Comprehensive Data Structure Schemas
+**Intelligent Build System**: The Makefile implements timestamp-based incremental compilation that checks dependencies across template files, data files, and common modules.
 
-#### Basic Information Schema
-```json
-{
-  "name": "Full Name",
-  "contact": {
-    "email": "contact@example.com",
-    "phone": "+1-555-0123",
-    "github": "https://github.com/username",
-    "linkedin": "https://linkedin.com/in/profile",
-    "website": "https://personal-website.com"
-  },
-  "lang_config": {
-    "education_title": "Education / 教育背景",
-    "experience_title": "Experience / 工作经历", 
-    "projects_title": "Projects / 项目经历"
-  }
-}
-```
+**Bilingual Support**: Template functions accept `is-chinese` parameter to handle language-specific formatting (indentation, font selection, labels).
 
-#### Education Schema
-```json
-[
-  {
-    "institution": "University Name",
-    "degree": "Master of Science in Computer Science",
-    "duration": "2020 - 2024",
-    "location": "City, Country",
-    "details": ["Relevant coursework", "Academic achievements", "Research projects"]
-  }
-]
-```
+### Font Management
+- Uses project-local font system with Inter (English) and Source Han Sans SC (Chinese)
+- Fonts are installed to user directory via `scripts/install_fonts.sh`
+- Font configuration is handled in `settings.typ`
 
-#### Experience Schema  
-```json
-[
-  {
-    "company": "Company Name",
-    "position": "Senior Software Engineer",
-    "duration": "2023.06 - Present",
-    "location": "City, Country",
-    "description": [
-      "Led development of microservices architecture",
-      "Improved system performance by 40%",
-      "Mentored junior developers"
-    ]
-  }
-]
-```
+### Build Dependencies
+The build system tracks these dependency relationships:
+- Template files depend on: `src/common/*.typ`
+- Resume compilation depends on: language-specific data files (`src/data/{zh,en}/*.json`)
+- Multi-format output: Each build generates PDF, SVG (for web), and PNG (300 DPI)
 
-#### Projects Schema
-```json
-[
-  {
-    "name": "Project Name",
-    "description": "Brief project description highlighting key features",
-    "tech-stack": "React, Node.js, PostgreSQL, Docker",
-    "details": [
-      "Implemented real-time data processing",
-      "Achieved 99.9% uptime",
-      "Deployed to production serving 10k+ users"
-    ]
-  }
-]
-```
+## Development Workflow
 
-### Advanced Styling Customization
-Modify parameters in `src/common/settings.typ` for comprehensive visual control:
-- **Color Schemes**: Primary, secondary, accent colors with accessibility considerations
-- **Typography**: Font sizes, line heights, spacing parameters
-- **Layout**: Margins, section spacing, page dimensions
-- **Components**: Header styles, bullet points, divider appearances
+1. **Initial Setup**: Always run `make init` first to install Typst and dependencies
+2. **Data Editing**: Modify JSON files in `src/data/{zh,en}/` for content changes
+3. **Template Customization**: Edit `src/common/*.typ` files for layout/styling
+4. **Testing Changes**: Use `make zh` or `make en` for quick incremental builds
+5. **Full Build**: Use `make build` before final distribution
 
-Always use the `get-style-params()` function to access configuration values rather than hardcoding.
+## Important Notes
 
-### Template System Modifications
-- **Layout Changes**: Edit `src/common/template.typ` for structural modifications
-- **Component Styling**: Modify `src/common/style.typ` for visual component adjustments
-- **Data Integration**: Templates read from multiple JSON files - maintain import structure consistency
-- **Language Support**: Ensure modifications work correctly with both Chinese and English configurations
-
-## Comprehensive Dependencies
-
-### Core Requirements
-- **Typst** (primary requirement) - Modern typesetting engine
-  - Installation: `sudo pacman -S typst` (Arch Linux) or via Cargo
-  - Version: Latest stable recommended
-- **GNU Make** (build system) - Smart dependency management and build orchestration
-- **Node.js & npm** (optional) - For development tooling and package management
-
-### Font Dependencies
-- **Download Tools**: `wget` or `curl` for font acquisition
-- **Font Processing**: `unzip` for font archive extraction
-- **Font Cache**: `fc-cache` for system font cache management
-- **Font Management**: Automatic installation via `scripts/install_fonts.sh`
-
-### System Requirements
-- **Operating Systems**: Ubuntu 20.04+, Debian 11+, Arch Linux, Manjaro
-- **Shell**: Bash/Zsh with standard Unix utilities
-- **Permissions**: User-level font directory access (`~/.local/share/fonts/`)
-
-## Advanced Font System
-
-### Professional Font Selection
-The project employs carefully selected fonts for optimal readability and professional appearance:
-- **Chinese Typography**: Source Han Sans SC (思源黑体) - Comprehensive CJK character support
-- **Latin Typography**: Inter font family - Modern, highly readable geometric sans-serif
-- **Font Weights**: Regular, Medium, Bold, and Italic variants for hierarchical typography
-
-### Font Management Architecture
-- **Project-Level Storage**: All fonts stored in `fonts/` directory for version control
-- **User Installation**: Fonts installed to `~/.local/share/fonts/resume-project/`
-- **System Integration**: Automatic font cache refresh and validation
-- **Cross-Platform Consistency**: Identical rendering across different Linux distributions
-
-## Output and Distribution
-
-### Multi-Format Output System
-Professional-grade output in multiple formats for diverse distribution needs:
-- **PDF**: Production-ready with proper font embedding and vector graphics
-  - `dist/resume-zh.pdf` - Chinese version with proper CJK typography
-  - `dist/resume-en.pdf` - English version with optimized Latin typography
-- **SVG**: Vector format for web display and digital platforms
-  - `dist/resume-zh-*.svg` - Chinese version in scalable vector format
-  - `dist/resume-en-*.svg` - English version in scalable vector format
-- **PNG**: High-resolution bitmap for social media and quick previews
-  - `dist/resume-zh-*.png` - Chinese version at 300 DPI
-  - `dist/resume-en-*.png` - English version at 300 DPI
-
-### File Characteristics
-- **PDF Format**: PDF/A-1b compliance for archival quality
-- **SVG Format**: Web-optimized with embedded fonts and proper scaling
-- **PNG Format**: High-resolution (300 DPI) for print-quality bitmap output
-- **Universal Compatibility**: Embedded fonts ensure consistent rendering across all platforms
-- **Accessibility**: High contrast ratios and readable font sizes across all formats
-
-### Documentation and Preview System
-- **Visual Documentation**: README.md includes SVG preview of the Chinese resume
-- **Preview File**: `docs/resume-preview.svg` showcases the template design
-- **Complete Documentation**: Comprehensive setup guide and feature overview
-
-## Migration and Maintenance Guide
-
-### Data Migration Best Practices
-When migrating from legacy single-file structures:
-
-1. **Schema Analysis**: Examine existing data structure and mapping requirements
-2. **File Splitting**: Systematically separate data into logical modules:
-   ```bash
-   # Example migration strategy
-   basic.json     ← name, contact, lang_config from original data.json
-   education.json ← education array from original data.json
-   experience.json ← experience array from original data.json
-   projects.json  ← projects array from original data.json
-   ```
-3. **Template Updates**: Modify `resume.typ` files to import from new modular structure
-4. **Build System**: Update Makefile dependencies to track all data files
-5. **Validation**: Ensure template functions handle new data structure correctly
-
-### Maintenance Workflows
-- **Regular Updates**: Keep Typst version updated for latest features
-- **Font Verification**: Periodically verify font installation integrity
-- **Template Testing**: Test both language versions after template modifications
-- **Data Validation**: Ensure JSON syntax validity after content updates
-
-## Development Environment Setup
-
-### First-Time Setup Checklist
-1. ✅ Run `make init` for automated environment preparation
-2. ✅ Verify Typst installation: `typst --version`
-3. ✅ Confirm font installation: Check `~/.local/share/fonts/resume-project/`
-4. ✅ Test build system: `make build`
-5. ✅ Validate output: Review generated PDFs in `dist/`
-
-### Development Best Practices
-- **Incremental Development**: Use `make zh` or `make en` for rapid iteration across all formats
-- **Version Control**: Commit source files and optionally generated files for history
-- **Multi-Format Testing**: Verify changes in PDF, SVG, and PNG outputs
-- **Format-Specific Considerations**: Test SVG rendering in browsers, PNG quality at different scales
-- **Documentation**: Update comments in templates for complex modifications and maintain README.md
-
-## Response Guidelines
-Always respond in Chinese when providing assistance or explanations.
+- The build system supports Ubuntu/Debian/Arch Linux only
+- Typst compilation requires proper font installation via `make init`
+- JSON data files support both array and string formats for descriptions
+- The template uses modern Typst syntax with named parameters and grid layouts
+- Git hooks automatically run fullwidth-to-halfwidth conversion on commit

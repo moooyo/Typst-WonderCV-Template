@@ -2,7 +2,10 @@
   {
     "institution": "响当当大学",
     "degree": "武侠系 学士学位",
-    "duration": "2012年09月 - 2020年06月",
+    "duration": {
+      "start": "2012年09月",
+      "end": "2020年06月"
+    },
     "location": "江湖",
     "details": [
       "毕业排名: 第一名 (专业第一)",

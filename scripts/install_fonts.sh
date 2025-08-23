@@ -115,6 +115,20 @@ verify_fonts() {
         print_warning "  ! Inter字体: 可能未正确安装"
     fi
     
+    # 检查Libertinus Serif字体
+    if fc-list | grep -i "libertinus.*serif" >/dev/null 2>&1 || ls "$USER_FONTS_DIR"/LibertinusSerif* >/dev/null 2>&1; then
+        print_success "  ✓ Libertinus Serif字体: 可用"
+    else
+        print_warning "  ! Libertinus Serif字体: 可能未正确安装"
+    fi
+
+    # 检查Source Han Serif SC字体
+    if fc-list | grep -i "source.*han.*serif.*sc" >/dev/null 2>&1 || ls "$USER_FONTS_DIR"/SourceHanSerifSC* >/dev/null 2>&1; then
+        print_success "  ✓ Source Han Serif SC字体: 可用"
+    else
+        print_warning "  ! Source Han Serif SC字体: 可能未正确安装"
+    fi
+    
     # 验证Typst是否能识别字体
     if command -v typst >/dev/null 2>&1; then
         print_info "验证Typst字体识别..."
@@ -123,6 +137,12 @@ verify_fonts() {
         fi
         if typst fonts | grep -i "source.*han.*sans" >/dev/null 2>&1; then
             print_success "  ✓ Typst能识别思源黑体字体"
+        fi
+        if typst fonts | grep -i "libertinus.*serif" >/dev/null 2>&1; then
+            print_success "  ✓ Typst能识别Libertinus Serif字体"
+        fi
+        if typst fonts | grep -i "source.*han.*serif.*sc" >/dev/null 2>&1; then
+            print_success "  ✓ Typst能识别Source Han Serif SC字体"
         fi
         print_success "  ✓ Typst字体系统工作正常"
     fi
@@ -143,8 +163,10 @@ show_install_info() {
     
     echo
     print_info "现在可以在简历编译中使用以下字体:"
-    print_info "  • 中文字体: Source Han Sans SC (思源黑体)"
-    print_info "  • 英文字体: Inter"
+    print_info "  • 中文字体: Source Han Sans SC (思源黑体) - 屏幕版"
+    print_info "  • 中文字体: Source Han Serif SC (思源宋体) - 打印版"
+    print_info "  • 英文字体: Inter (无衬线) - 屏幕版"
+    print_info "  • 英文字体: Libertinus Serif (衬线) - 打印版"
     echo
     print_info "运行 'make zh' 或 'make en' 来编译简历"
 }

@@ -20,16 +20,34 @@
   paragraph: (
     // 段落对齐方式
     justify: true,            // 是否两端对齐
+    // 段落行间距
+    leading: 0.65em,          // 行间距（相对于字体大小）
+    // 段落间距
+    spacing: 0.65em,          // 段落间距
   ),
   
   // ==========================================================================
   // 字体配置 - Font Configuration
   // ==========================================================================
   fonts: (
-    // 中文字体 - 使用兰亭黑（思源黑体 SC）
-    chinese: ("Source Han Sans SC",),
-    // 英文字体 - 使用Inter字体
-    english: ("Inter",),
+    // 字体主题配置 - 可选择屏幕版（无衬线）或打印版（衬线）
+    theme: "screen", // 可选值: "screen" 或 "print"
+    
+    // 屏幕版字体配置（无衬线，适合电子版）
+    screen: (
+      // 中文字体 - 使用思源黑体 SC
+      chinese: ("Source Han Sans SC",),
+      // 英文字体 - 使用Inter字体
+      english: ("Inter",),
+    ),
+    
+    // 打印版字体配置（衬线，适合纸质版）
+    print: (
+      // 中文字体 - 使用思源宋体 SC
+      chinese: ("Source Han Serif SC",),
+      // 英文字体 - 使用Libertinus Serif（开源Times New Roman替代）
+      english: ("Libertinus Serif",),
+    ),
   ),
   
   // ==========================================================================
@@ -37,6 +55,7 @@
   // ==========================================================================
   font-sizes: (
     base: 10pt,               // 基础字体大小
+    leading: 0.65em,          // 基础行间距（相对于字体大小）
     name: 15pt,               // 姓名标题字号
     description: 8pt,         // 描述文字字号，使内容更紧凑
     section-heading: 9pt,     // 章节标题字号（工作经历、项目经历等）
@@ -94,8 +113,11 @@
     
     // 垂直间距预设值
     v-small: 2pt,             // 小间距
-    v-medium: 5pt,            // 中等间距
-    v-large: 10pt,            // 大间距
+    v-medium: 4pt,            // 中等间距（稍微收紧）
+    v-large: 8pt,             // 大间距（稍微收紧）
+    
+    // 段落行间距
+    paragraph-leading: 0.65em, // 段落内行间距
     
     // 水平间距预设值
     h-small: 2pt,             // 小间距
