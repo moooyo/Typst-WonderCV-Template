@@ -92,33 +92,28 @@
     chiline
   }
   
-  // 个人信息头部 - 使用现代化的网格布局
-  grid(
-    columns: settings.layout.grid-columns.two-column,
-    align(center)[
-      = #name
+  // 个人信息头部 - 使用居中对齐布局
+  align(center)[
+    = #name
 
-      #set text(settings.colors.text-medium)
-      
-      #let contact-items = ()
-      #if "phone" in contact { contact-items.push(contact.phone) }
-      #if "email" in contact { contact-items.push(contact.email) }
-      #if "wechat" in contact {
-        let wechat-prefix = if is-chinese {
-          settings.contact.wechat-label.chinese
-        } else {
-          settings.contact.wechat-label.english
-        }
-        contact-items.push(wechat-prefix + contact.wechat)
+    #set text(settings.colors.text-medium)
+    
+    #let contact-items = ()
+    #if "phone" in contact { contact-items.push(contact.phone) }
+    #if "email" in contact { contact-items.push(contact.email) }
+    #if "wechat" in contact {
+      let wechat-prefix = if is-chinese {
+        settings.contact.wechat-label.chinese
+      } else {
+        settings.contact.wechat-label.english
       }
-      
-      #if contact-items.len() > 0 {
-        contact-items.join(settings.contact.separator.trim())
-      }
-    ], 
-    // 照片占位符（保留扩展性）
-    []
-  )
+      contact-items.push(wechat-prefix + contact.wechat)
+    }
+    
+    #if contact-items.len() > 0 {
+      contact-items.join(settings.contact.separator.trim())
+    }
+  ]
 
   set text(settings.colors.text-light)
 
