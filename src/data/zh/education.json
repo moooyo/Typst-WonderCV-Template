@@ -1,7 +1,8 @@
 [
   {
     "institution": "响当当大学",
-    "degree": "武侠系 学士学位",
+    "degree": "学士学位",
+    "major": "武侠系",
     "duration": {
       "start": "2012年09月",
       "end": "2020年06月"

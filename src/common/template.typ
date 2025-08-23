@@ -117,6 +117,75 @@
 
   set text(settings.colors.text-light)
 
+  // 教育经历 - 使用现代化的布局和样式
+  if education.len() > 0 {
+    [== #lang-config.at("education", default: "Education")]
+    
+    for edu in education {
+      // 第一行：学校名称（左对齐）和日期（右对齐）
+      grid(
+        columns: settings.layout.grid-columns.two-column,
+        align: (left, right),
+        text(
+          fill: settings.colors.text-medium, 
+          weight: "bold", 
+          size: settings.font-sizes.sub-heading
+        )[#edu.institution],
+        text(
+          fill: settings.colors.gray, 
+          weight: "regular", 
+          size: settings.font-sizes.sub-heading
+        )[#format-duration(edu.duration)],
+      )
+      v(settings.spacing.grid-row-spacing)
+      
+      // 第二行：学位和专业（左对齐）和地点（右对齐）
+      let degree = edu.degree
+      let major = edu.at("major", default: "")
+      let degree_major = if major != "" and degree != "" {
+        if is-chinese {
+          degree + "，" + major
+        } else {
+          degree + " in " + major
+        }
+      } else if degree != "" {
+        degree
+      } else if major != "" {
+        major
+      } else {
+        ""
+      }
+      let loc = edu.location
+      
+      if degree_major != "" or loc != "" {
+        grid(
+          columns: settings.layout.grid-columns.two-column,
+          align: (left, right),
+          text(
+            fill: settings.colors.text-dark,
+            style: "italic", 
+            size: settings.font-sizes.description
+          )[#degree_major],
+          text(
+            fill: settings.colors.gray,
+            size: settings.font-sizes.description
+          )[#loc],
+        )
+        v(settings.spacing.grid-row-spacing)
+      }
+      
+      let details = edu.details
+      for detail in details {
+        text(
+          fill: settings.colors.text-light,
+          size: settings.font-sizes.description
+        )[#settings.list.bullet #detail]
+        linebreak()
+      }
+      v(settings.spacing.section-item-spacing)
+    }
+  }
+
   // 工作经历 - 使用现代化的布局和样式
   if experience.len() > 0 {
     [== #lang-config.at("experience", default: "Experience")]
@@ -129,7 +198,7 @@
         text(
           fill: settings.colors.text-medium, 
           weight: "bold", 
-          size: settings.font-sizes.sub-heading
+          size: settings.font-sizes.company-name
         )[#exp.company],
         text(
           fill: settings.colors.gray, 
@@ -137,7 +206,7 @@
           size: settings.font-sizes.sub-heading
         )[#format-duration(exp.duration)],
       )
-      v(settings.spacing.grid-row-spacing)  // 使用统一的grid行间距配置
+      v(settings.spacing.grid-row-spacing)
       
       // 第二行：职位（左对齐）和地点（右对齐）
       let pos = exp.position
@@ -157,7 +226,7 @@
             size: settings.font-sizes.description
           )[#loc],
         )
-        v(settings.spacing.grid-row-spacing)  // 使用统一的grid行间距配置
+        v(settings.spacing.grid-row-spacing)
       }
       
       let desc = exp.description
@@ -184,7 +253,7 @@
         text(
           fill: settings.colors.text-dark, 
           weight: "bold", 
-          size: settings.font-sizes.sub-heading
+          size: settings.font-sizes.project-name
         )[#proj.name],
         text(
           fill: settings.colors.gray, 
@@ -192,7 +261,24 @@
           size: settings.font-sizes.sub-heading
         )[#format-duration(proj.at("duration", default: ""))],
       )
-      v(settings.spacing.grid-row-spacing)  // 使用统一的grid行间距配置
+      v(settings.spacing.grid-row-spacing)
+      
+      // 显示技术栈信息
+      let tech_stack = proj.at("tech-stack", default: "")
+      if tech_stack != "" {
+        let tech_prefix = if is-chinese { 
+          settings.list.tech-prefix.chinese 
+        } else { 
+          settings.list.tech-prefix.english 
+        }
+        text(
+          fill: settings.colors.tech-stack,
+          size: settings.font-sizes.description,
+          style: "italic"
+        )[#tech_prefix#tech_stack]
+        linebreak()
+        v(settings.spacing.tech-stack-spacing)
+      }
       
       let desc = proj.description
       if desc != () {
@@ -217,59 +303,6 @@
       }
       
       let details = proj.at("details", default: ())
-      for detail in details {
-        text(
-          fill: settings.colors.text-light,
-          size: settings.font-sizes.description
-        )[#settings.list.bullet #detail]
-        linebreak()
-      }
-      v(settings.spacing.section-item-spacing)
-    }
-  }
-
-  // 教育经历 - 使用现代化的布局和样式
-  if education.len() > 0 {
-    [== #lang-config.at("education", default: "Education")]
-    
-    for edu in education {
-      // 第一行：学校名称（左对齐）和日期（右对齐）
-      grid(
-        columns: settings.layout.grid-columns.two-column,
-        align: (left, right),
-        text(
-          fill: settings.colors.text-medium, 
-          weight: "bold", 
-          size: settings.font-sizes.sub-heading
-        )[#edu.institution],
-        text(
-          fill: settings.colors.gray, 
-          weight: "regular", 
-          size: settings.font-sizes.sub-heading
-        )[#format-duration(edu.duration)],
-      )
-      
-      // 第二行：学位（左对齐）和地点（右对齐）
-      let degree = edu.degree
-      let loc = edu.location
-      
-      if degree != "" or loc != "" {
-        grid(
-          columns: settings.layout.grid-columns.two-column,
-          align: (left, right),
-          text(
-            fill: settings.colors.text-dark,
-            style: "italic", 
-            size: settings.font-sizes.description
-          )[#degree],
-          text(
-            fill: settings.colors.gray,
-            size: settings.font-sizes.description
-          )[#loc],
-        )
-      }
-      
-      let details = edu.details
       for detail in details {
         text(
           fill: settings.colors.text-light,

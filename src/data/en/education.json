@@ -1,7 +1,8 @@
 [
   {
     "institution": "Xiangdangdang University",
-    "degree": "Bachelor of Martial Arts",
+    "degree": "Bachelor of Science",
+    "major": "Martial Arts",
     "duration": {
       "start": "2016.09",
       "end": "2020.06"

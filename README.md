@@ -18,6 +18,16 @@
 
 ## 🆕 最新更新
 
+### v2.1 - 格式优化与体验提升 (2025-08-23)
+
+- 🔄 **简历结构优化**: 调整为标准的教育经历 → 工作经历 → 项目经历显示顺序
+- 🎨 **视觉层次增强**: 优化字体大小层次，公司名称(9pt) > 项目名称(8.5pt) > 其他标题(8pt)
+- 🎓 **教育信息完善**: 学位和专业字段分离，支持中英文不同格式展示
+- 🛠️ **技术栈展示**: 新增项目技术栈信息显示，支持双语前缀配置
+- 📏 **间距布局优化**: 减少过度紧密的负间距，提升整体可读性
+- 🎯 **配色方案增强**: 为技术栈等特殊元素添加专门的颜色配置
+- 🐛 **修复重复问题**: 解决教育经历重复显示的模板错误
+
 ### v2.0 - 字体与排版增强 (2025-08-23)
 
 - ✨ **新增 Source Han Serif SC 思源宋体支持**: 提供 ExtraLight、Light、Regular、Medium、SemiBold、Bold、Heavy 七种字重
@@ -56,6 +66,25 @@ make en       # 仅构建英文版本
 3. **更新工作经历**: 修改 `src/data/zh/experience.json` 或 `src/data/en/experience.json`
 4. **管理项目经历**: 编辑 `src/data/zh/projects.json` 或 `src/data/en/projects.json`
 5. **重新构建**: 运行 `make zh` 或 `make en`
+
+### 📋 简历格式说明
+
+#### 显示顺序优化
+简历按照标准格式顺序展示：**教育经历** → **工作经历** → **项目经历**
+
+#### 字体层次设计
+- **公司名称**: 9pt，突出工作经历的重要性
+- **项目名称**: 8.5pt，平衡项目展示效果
+- **其他标题**: 8pt，保持整体协调性
+
+#### 技术栈展示
+项目经历支持技术栈信息展示：
+- 中文格式：`技术栈: Python, Django, MySQL`
+- 英文格式：`Tech Stack: Python, Django, MySQL`
+
+#### 教育信息格式
+- 中文格式：`学士学位，计算机科学`
+- 英文格式：`Bachelor of Science in Computer Science`
 
 ## 📁 项目结构
 
@@ -132,32 +161,66 @@ make en       # 仅构建英文版本
 
 ### 教育经历 (education.json)
 ```json
-{
-  "education": [
-    {
-      "institution": "学校名称",
-      "degree": "学位",
-      "major": "专业",
-      "duration": "时间段",
-      "location": "地点"
-    }
-  ]
-}
+[
+  {
+    "institution": "学校名称",
+    "degree": "学位",
+    "major": "专业",
+    "duration": {
+      "start": "开始时间",
+      "end": "结束时间"
+    },
+    "location": "地点",
+    "details": [
+      "详细信息1",
+      "详细信息2"
+    ]
+  }
+]
 ```
 
 ### 工作经历 (experience.json)
 详细的工作经历，包含公司、职位、时间、地点和主要职责描述。
 
 ### 项目经历 (projects.json)
-项目经历信息，包含项目名称、技术栈、时间和详细描述。
+```json
+[
+  {
+    "name": "项目名称",
+    "tech-stack": "Python, Django, MySQL, Redis",
+    "duration": {
+      "start": "开始时间",
+      "end": "结束时间"
+    },
+    "description": [
+      "项目描述段落1",
+      "项目描述段落2"
+    ],
+    "details": [
+      "技术细节1",
+      "技术细节2"
+    ]
+  }
+]
+```
 
 ## 🎨 自定义样式
 
 模板系统支持深度自定义：
 
-- **颜色主题**: 修改 `src/common/style.typ` 中的颜色变量
-- **字体配置**: 更新 `src/common/settings.typ` 中的字体设置
+- **颜色主题**: 修改 `src/common/settings.typ` 中的 `colors` 配置
+- **字体配置**: 更新 `src/common/settings.typ` 中的 `fonts` 设置
+- **字体大小**: 调整 `src/common/settings.typ` 中的 `font-sizes` 配置
+- **间距布局**: 修改 `src/common/settings.typ` 中的 `spacing` 配置
 - **布局调整**: 编辑 `src/common/template.typ` 中的布局逻辑
+
+### 主要配置项
+
+- `font-sizes.company-name`: 公司名称字体大小 (默认: 9pt)
+- `font-sizes.project-name`: 项目名称字体大小 (默认: 8.5pt)
+- `colors.tech-stack`: 技术栈信息颜色
+- `spacing.tech-stack-spacing`: 技术栈与正文间距
+- `list.tech-prefix`: 技术栈前缀文本配置
 
 ## 🔧 系统要求与兼容性
 
@@ -200,3 +263,5 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 ---
 
 ⭐ 如果这个项目对你有帮助，请给个 Star！
+
+*最后更新: 2025年8月23日 - v2.1 格式优化版本*
